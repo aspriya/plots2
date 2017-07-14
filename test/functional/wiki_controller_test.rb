@@ -572,4 +572,15 @@ class WikiControllerTest < ActionController::TestCase
     get :show, id: @node.slug
     assert_response :success
   end
+
+  test 'There should be a tab for show wiking comments' do
+    wiki = node(:wiki_page)
+    slug = wiki.path.gsub('/wiki/', '')
+    get :show, id: slug
+    assert_response :success
+    assert_select "ul.nav.nav-tabs" do |elements|
+      assert_select elements, "li", 6
+    end
+  end
+
 end
